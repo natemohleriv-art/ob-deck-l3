@@ -1040,6 +1040,8 @@ export default function App() {
                           "LED_Floor",
                           "LED_Ceiling",
                           ...config.wallSections.map((a) => a.id),
+                          "BuildingCore",
+                          "BuildingShell",
                           "StructuralColumns",
                           "Soffits",
                           "CeilingBeams",

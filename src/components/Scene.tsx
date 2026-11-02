@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, type ReactNode } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   OrbitControls,
@@ -15,6 +15,8 @@ import { mappingDefault, formatDimension } from "../config/scene";
 import { mapUV, wallUV } from "../utils/mapping";
 import { makePattern } from "../utils/patterns";
 import type { V3 } from "../types";
+import { coreEnvelope, CITY_GROUND } from "../config/context";
+import CityEnvironment from "./CityEnvironment";
 export type Assets = {
   model: THREE.Group | null;
   reference: THREE.Texture | null;
@@ -200,6 +202,26 @@ function Architecture() {
   const columns = [-L, -L / 2, 0, L / 2, L];
   return (
     <group name="Architecture">
+      <Editable id="BuildingCore">
+        {coreEnvelope(c).map((part) => (
+          <group key={part.name} name={part.name}>
+            <Box
+              p={part.position}
+              size={part.size}
+              color="#373b43"
+              metal={0.15}
+            />
+          </group>
+        ))}
+      </Editable>
+      <Editable id="BuildingShell">
+        <Box
+          p={[-5, (CITY_GROUND - 0.42) / 2, 0]}
+          size={[c.width + 14, -CITY_GROUND - 0.42, c.length + 1]}
+          color="#344450"
+          metal={0.45}
+        />
+      </Editable>
       <Editable id="SurroundingFloors">
         <Box
           p={[0.35, -0.22, 0]}
@@ -304,26 +326,47 @@ function Architecture() {
         {c.wallSections
           .filter((a) => a.bottom > 1)
           .map((a) => (
-            <group key={a.id}>
+            <group key={a.id} name={`Recess_${a.id}`}>
               <Box
-                p={[-w - 0.18, a.bottom / 2, a.start - 0.09]}
-                size={[0.4, a.bottom, 0.18]}
-                color="#292d35"
+                p={[-w - 0.34, a.bottom / 2, a.start - 0.065]}
+                size={[0.65, a.bottom, 0.13]}
+                color="#262b32"
               />
               <Box
-                p={[-w - 0.18, a.bottom / 2, a.start + a.length + 0.09]}
-                size={[0.4, a.bottom, 0.18]}
-                color="#292d35"
+                p={[-w - 0.34, a.bottom / 2, a.start + a.length + 0.065]}
+                size={[0.65, a.bottom, 0.13]}
+                color="#262b32"
               />
               <Box
-                p={[-w - 0.18, a.bottom - 0.09, a.start + a.length / 2]}
-                size={[0.4, 0.18, a.length]}
-                color="#292d35"
+                p={[-w - 0.34, a.bottom - 0.05, a.start + a.length / 2]}
+                size={[0.65, 0.1, a.length]}
+                color="#262b32"
               />
               <Box
-                p={[-w - 2, 1.45, a.start + a.length / 2]}
-                size={[0.1, 2.9, a.length]}
-                color="#20242c"
+                p={[-w - 0.34, -0.04, a.start + a.length / 2]}
+                size={[0.65, 0.08, a.length]}
+                color="#60616a"
+              />
+              {/* Opaque recessed doors face the gallery; no view through to the city. */}
+              {[0.25, 0.75].map((f) => (
+                <Box
+                  key={f}
+                  p={[-w - 0.6, a.bottom / 2, a.start + a.length * f]}
+                  size={[0.08, a.bottom - 0.06, a.length / 2 - 0.025]}
+                  color="#41464d"
+                  metal={0.6}
+                />
+              ))}
+              <Box
+                p={[-w - 0.55, a.bottom / 2, a.start + a.length / 2]}
+                size={[0.025, a.bottom, 0.025]}
+                color="#151a22"
+              />
+              <Box
+                p={[-w - 0.53, 1.05, a.start + a.length / 2 - 0.11]}
+                size={[0.035, 0.24, 0.025]}
+                color="#9da3ab"
+                metal={0.85}
               />
             </group>
           ))}
@@ -338,103 +381,6 @@ function Architecture() {
           />
         ))}
       </Editable>
-    </group>
-  );
-}
-function Skyline() {
-  const s = useStore();
-  const night = s.environment === "Nighttime",
-    day = s.environment === "Daytime";
-  const scene = useThree((t) => t.scene);
-  useEffect(() => {
-    scene.background = new THREE.Color(
-      day ? "#a9c5dc" : night ? "#0b1428" : "#9e90a4",
-    );
-    scene.fog = new THREE.Fog(
-      day ? "#bbc8d2" : night ? "#17243c" : "#9492a7",
-      80,
-      500,
-    );
-    return () => {
-      scene.background = null;
-      scene.fog = null;
-    };
-  }, [scene, day, night]);
-  const buildings = useMemo(() => {
-    let seed = 93;
-    const rand = () => {
-      seed = (seed * 1664525 + 1013904223) >>> 0;
-      return seed / 4294967296;
-    };
-    return Array.from({ length: 180 }, () => {
-      const angle = rand() * Math.PI * 2,
-        r = 70 + rand() * 330,
-        height = 12 + rand() * 100;
-      return {
-        x: Math.cos(angle) * r,
-        z: Math.sin(angle) * r,
-        h: height,
-        w: 5 + rand() * 12,
-        t: rand(),
-      };
-    });
-  }, []);
-  return (
-    <group name="Environment">
-      <ambientLight intensity={s.exposure * (day ? 1.6 : night ? 0.32 : 0.8)} />
-      <hemisphereLight args={["#c6d6ff", "#3a2235", s.exposure * 0.7]} />
-      <directionalLight
-        position={[30, 50, -30]}
-        intensity={s.exposure * (day ? 2 : 0.6)}
-        color={day ? "#fff1d7" : "#c2b8ed"}
-      />
-      <group name="Skyline">
-        {buildings.map((b, i) => (
-          <group key={i} position={[b.x, -120 + b.h / 2, b.z]}>
-            <mesh>
-              <boxGeometry args={[b.w, b.h, b.w]} />
-              <meshStandardMaterial
-                color={day ? "#738399" : "#293953"}
-                emissive={night ? "#7d9ebc" : "#53637a"}
-                emissiveIntensity={s.skyline * (night ? 0.12 : 0.08)}
-                roughness={0.65}
-              />
-            </mesh>
-            {b.t > 0.5 && (
-              <mesh position={[0, b.h / 2 + 3, 0]}>
-                <boxGeometry args={[b.w * 0.6, 6, b.w * 0.6]} />
-                <meshStandardMaterial color="#435269" />
-              </mesh>
-            )}
-            {night &&
-              Array.from({ length: 8 }, (_, j) => (
-                <mesh
-                  key={j}
-                  position={[0, -b.h * 0.4 + (j * b.h) / 10, b.w / 2 + 0.02]}
-                >
-                  <planeGeometry args={[b.w * 0.7, 0.5]} />
-                  <meshBasicMaterial
-                    color={b.t > 0.7 ? "#ffce8e" : "#89a6df"}
-                    colorWrite
-                    toneMapped={false}
-                  />
-                </mesh>
-              ))}
-          </group>
-        ))}
-      </group>
-      <pointLight
-        position={[-2, 3, -3]}
-        intensity={12 * s.exposure}
-        distance={15}
-        color="#b076ce"
-      />
-      <pointLight
-        position={[1, 3, 8]}
-        intensity={10 * s.exposure}
-        distance={14}
-        color="#f3ad91"
-      />
     </group>
   );
 }
@@ -612,7 +558,7 @@ function World({ assets }: { assets: Assets }) {
     c = s.config;
   return (
     <group name="OBDeck_L3">
-      <Skyline />
+      <CityEnvironment />
       {s.procedural && <Architecture />}
       <group name="LED">
         <LED
@@ -698,7 +644,7 @@ export default function Scene({ assets }: { assets: Assets }) {
   return (
     <Canvas
       dpr={[1, 1.5]}
-      camera={{ position: [2.5, 1.7, 13.2], fov: 65, near: 0.05, far: 1000 }}
+      camera={{ position: [2.5, 1.7, 13.2], fov: 65, near: 0.05, far: 5000 }}
       gl={{ antialias: true, powerPreference: "high-performance" }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.NoToneMapping;

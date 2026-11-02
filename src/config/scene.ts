@@ -34,6 +34,13 @@ export const presets: CameraView[] = [
     position: [12, 10, 23],
     target: [0, 3, 0],
   },
+  {
+    name: "City / Long Windows",
+    position: [0, 1.7, 0],
+    target: [16, -0.3, -7],
+  },
+  { name: "City / Far End", position: [1, 1.7, -11], target: [3, 0.7, -28] },
+  { name: "City / Near End", position: [1, 1.7, 11], target: [3, 0.7, 28] },
   { name: "Elevated Overview", position: [18, 25, 27], target: [0, 0, 0] },
 ];
 // Source dimensions are printed callouts, never scaled from PDF pixels.
@@ -86,6 +93,16 @@ export const defaultConfig: SceneConfig = {
   },
   cameras: [],
   measurements: [
+    {
+      feature: "Building core and city context",
+      value: 0,
+      unit: "context",
+      source:
+        "User clarification and supplied building/skyline renderings (2026-11-02)",
+      confidence: "low",
+      status: "estimated",
+      note: "Opaque core at X-negative with enclosed door recesses; glazing only at X-positive and both Z ends. Supporting tower, city heights, facade details and landmark-inspired silhouettes are illustrative; not survey-registered. City grade is approximately 290 m below the LED floor.",
+    },
     {
       feature: "LED floor width",
       value: 6.7056,
