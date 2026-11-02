@@ -3,6 +3,8 @@ import { defaultConfig } from "../config/scene";
 import type { CameraView, SceneConfig } from "../types";
 type State = {
   direction: "original" | "direction2";
+  colorEchoes: boolean;
+  colorPlaying: boolean;
   revealMode: "auto" | "pointer";
   revealPlaying: boolean;
   config: SceneConfig;
@@ -38,6 +40,8 @@ type State = {
 };
 export const useStore = create<State>((set) => ({
   direction: "original",
+  colorEchoes: true,
+  colorPlaying: true,
   revealMode: "auto",
   revealPlaying: true,
   config: structuredClone(defaultConfig),

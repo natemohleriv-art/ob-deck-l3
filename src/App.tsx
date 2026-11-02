@@ -322,9 +322,30 @@ export default function App() {
                   })
                 }
               >
-                <option value="original">Direction 1 / Atmosphere</option>
+                <option value="original">Direction 1 / Color Echoes</option>
                 <option value="direction2">Direction 2 / Hidden Worlds</option>
               </select>
+              {s.direction === "original" && (
+                <>
+                  <select
+                    aria-label="Direction 1 content"
+                    value={s.colorEchoes ? "echoes" : "media"}
+                    onChange={(e) =>
+                      s.set({ colorEchoes: e.target.value === "echoes" })
+                    }
+                  >
+                    <option value="echoes">Walkers + footprints</option>
+                    <option value="media">Uploaded media / atmosphere</option>
+                  </select>
+                  {s.colorEchoes && (
+                    <button
+                      onClick={() => s.set({ colorPlaying: !s.colorPlaying })}
+                    >
+                      {s.colorPlaying ? "Pause walkers" : "Play walkers"}
+                    </button>
+                  )}
+                </>
+              )}
               {s.direction === "direction2" && (
                 <>
                   <select
@@ -474,16 +495,22 @@ export default function App() {
               <span className="eyebrow">
                 {s.direction === "direction2"
                   ? "DIRECTION 2 / HIDDEN WORLDS"
-                  : "THE IMMERSIVE GALLERY"}
+                  : s.colorEchoes
+                    ? "DIRECTION 1 / COLOR ECHOES"
+                    : "THE IMMERSIVE GALLERY"}
               </span>
               <h2>
                 {s.direction === "direction2"
                   ? "Point. Discover."
-                  : "A canvas beyond"}
+                  : s.colorEchoes
+                    ? "Every step"
+                    : "A canvas beyond"}
                 <br />
                 {s.direction === "direction2"
                   ? "Reveal the unseen."
-                  : "the screen."}
+                  : s.colorEchoes
+                    ? "leaves a color."
+                    : "the screen."}
               </h2>
               <p>
                 {formatDimension(config.width, s.imperial)} ×{" "}
@@ -493,7 +520,9 @@ export default function App() {
                   ? s.revealMode === "pointer"
                     ? "Move your pointer over the LED wall. Hidden scenes change every 10 seconds."
                     : "Three tracked reveals. Architecture, city, clockwork."
-                  : "Three surfaces. One shared experience."}
+                  : s.colorEchoes
+                    ? "Simulated walkers displace color. Footprints linger, then fade."
+                    : "Three surfaces. One shared experience."}
               </p>
               <button
                 onClick={() =>
@@ -502,7 +531,7 @@ export default function App() {
                         revealMode:
                           s.revealMode === "auto" ? "pointer" : "auto",
                       })
-                    : s.set({ sidebar: true, tab: "Media" })
+                    : s.set({ sidebar: true, tab: "Media", colorEchoes: false })
                 }
               >
                 {s.direction === "direction2"

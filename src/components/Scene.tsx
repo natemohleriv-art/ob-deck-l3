@@ -17,6 +17,7 @@ import { makePattern } from "../utils/patterns";
 import type { V3 } from "../types";
 import { coreEnvelope } from "../config/context";
 import BuildingTower from "./BuildingTower";
+import DirectionOne from "./DirectionOne";
 import CityEnvironment from "./CityEnvironment";
 import DirectionTwo, { flashlightAim, flashlightActive } from "./DirectionTwo";
 export type Assets = {
@@ -185,6 +186,8 @@ function LED({
       >
         {s.direction === "direction2" ? (
           <DirectionTwo surface={surface} />
+        ) : s.colorEchoes ? (
+          <DirectionOne surface={surface} />
         ) : (
           <meshBasicMaterial
             map={media?.width ? media.texture : test}

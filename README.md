@@ -36,6 +36,10 @@ npm run build
 8. **Architecture** exposes dimensions, wall segments, reference overlays, model import, measurement provenance and calibration helpers. Select a named object for move/rotate/scale gizmos. Transform changes commit when the gizmo is released. Undo retains the last 30 edits; reset restores initial geometry and mapping.
 9. Export scene JSON or mapping JSON to keep edits. Import validates numerical dimensions, transforms and mapping rectangles. Scene JSON includes saved cameras. Camera-only JSON is an export for external use. Media files, reference images, imported models and lighting/UI session preferences are not embedded in JSON and must be reloaded/set in a new browser session.
 
+## Direction 1 — Color Echoes
+
+The default **Walkers + footprints** preview animates three stylized walking silhouettes on the side-wall LEDs. Their motion warps a fluid multicolor field and leaves soft color wakes. Matching alternating shoe prints are stamped at past positions on three floor lanes and fade over 9.6 seconds. The ceiling carries a quieter color field. **Pause walkers** freezes all three surfaces together. Choose **Uploaded media / atmosphere** to return to the video and calibration workflow. Walkers and recorded trails are simulated in the preview; no camera capture, physical visitor tracking, or persistent visitor-data recording is connected.
+
 ## Direction 2 — Hidden Worlds
 
 Choose **Direction 2 / Hidden Worlds** in the toolbar to map an animated flashlight-reveal concept onto the room. Blue contour ribbons animate on floor, ceiling and wall. Three warm-edged circular masks reveal steel framing with moving elevators, an animated city, and turning clockwork. These are generated LED pixels, with no flashlight beam or spotlight illuminating the architecture. Door apertures remain excluded from the LED imagery.
