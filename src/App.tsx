@@ -301,6 +301,50 @@ export default function App() {
             </div>
             <div className="toolbar">
               <select
+                aria-label="Creative direction"
+                value={s.direction}
+                onChange={(e) =>
+                  s.set({
+                    direction: e.target.value as typeof s.direction,
+                    ...(e.target.value === "direction2"
+                      ? {
+                          environment: "Nighttime",
+                          view: presets.find(
+                            (v) => v.name === "Long Gallery View",
+                          )!,
+                          calibration: false,
+                        }
+                      : {}),
+                  })
+                }
+              >
+                <option value="original">Direction 1 / Atmosphere</option>
+                <option value="direction2">Direction 2 / Hidden Worlds</option>
+              </select>
+              {s.direction === "direction2" && (
+                <>
+                  <select
+                    aria-label="Flashlight interaction"
+                    value={s.revealMode}
+                    onChange={(e) =>
+                      s.set({
+                        revealMode: e.target.value as typeof s.revealMode,
+                      })
+                    }
+                  >
+                    <option value="auto">Flashlights / Auto demo</option>
+                    <option value="pointer">
+                      Flashlight / Aim with pointer
+                    </option>
+                  </select>
+                  <button
+                    onClick={() => s.set({ revealPlaying: !s.revealPlaying })}
+                  >
+                    {s.revealPlaying ? "Pause reveals" : "Play reveals"}
+                  </button>
+                </>
+              )}
+              <select
                 aria-label="Camera preset"
                 value={s.view.name}
                 onChange={(e) => {
@@ -423,20 +467,46 @@ export default function App() {
           )}
           {!s.sidebar && (
             <div className="scene-info">
-              <span className="eyebrow">THE IMMERSIVE GALLERY</span>
+              <span className="eyebrow">
+                {s.direction === "direction2"
+                  ? "DIRECTION 2 / HIDDEN WORLDS"
+                  : "THE IMMERSIVE GALLERY"}
+              </span>
               <h2>
-                A canvas beyond
+                {s.direction === "direction2"
+                  ? "Point. Discover."
+                  : "A canvas beyond"}
                 <br />
-                the screen.
+                {s.direction === "direction2"
+                  ? "Reveal the unseen."
+                  : "the screen."}
               </h2>
               <p>
                 {formatDimension(config.width, s.imperial)} ×{" "}
                 {formatDimension(config.length, s.imperial)} floor
                 <br />
-                Three surfaces. One shared experience.
+                {s.direction === "direction2"
+                  ? s.revealMode === "pointer"
+                    ? "Move your pointer over the LED wall. Hidden scenes change every 10 seconds."
+                    : "Three tracked reveals. Architecture, city, clockwork."
+                  : "Three surfaces. One shared experience."}
               </p>
-              <button onClick={() => s.set({ sidebar: true, tab: "Media" })}>
-                Load your motion content <span>↗</span>
+              <button
+                onClick={() =>
+                  s.direction === "direction2"
+                    ? s.set({
+                        revealMode:
+                          s.revealMode === "auto" ? "pointer" : "auto",
+                      })
+                    : s.set({ sidebar: true, tab: "Media" })
+                }
+              >
+                {s.direction === "direction2"
+                  ? s.revealMode === "auto"
+                    ? "Try the virtual flashlight"
+                    : "Watch automatic demo"
+                  : "Load your motion content"}{" "}
+                <span>↗</span>
               </button>
             </div>
           )}

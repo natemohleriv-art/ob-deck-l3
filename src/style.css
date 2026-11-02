@@ -122,6 +122,8 @@ h1 {
 }
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px;
   align-items: center;
 }

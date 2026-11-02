@@ -2,6 +2,9 @@ import { create } from "zustand";
 import { defaultConfig } from "../config/scene";
 import type { CameraView, SceneConfig } from "../types";
 type State = {
+  direction: "original" | "direction2";
+  revealMode: "auto" | "pointer";
+  revealPlaying: boolean;
   config: SceneConfig;
   history: SceneConfig[];
   edit: (fn: (c: SceneConfig) => void) => void;
@@ -34,6 +37,9 @@ type State = {
   set: (s: Partial<State>) => void;
 };
 export const useStore = create<State>((set) => ({
+  direction: "original",
+  revealMode: "auto",
+  revealPlaying: true,
   config: structuredClone(defaultConfig),
   history: [],
   edit: (fn) =>

@@ -17,6 +17,7 @@ import { makePattern } from "../utils/patterns";
 import type { V3 } from "../types";
 import { coreEnvelope, CITY_GROUND } from "../config/context";
 import CityEnvironment from "./CityEnvironment";
+import DirectionTwo, { flashlightAim, flashlightActive } from "./DirectionTwo";
 export type Assets = {
   model: THREE.Group | null;
   reference: THREE.Texture | null;
@@ -171,12 +172,25 @@ function LED({
         position={position}
         rotation={rotation}
         geometry={geometry}
+        onPointerMove={(e) => {
+          if (s.direction === "direction2" && surface === "wall") {
+            flashlightAim.copy(e.point);
+            flashlightActive.value = true;
+          }
+        }}
+        onPointerOut={() => {
+          if (surface === "wall") flashlightActive.value = false;
+        }}
       >
-        <meshBasicMaterial
-          map={media?.width ? media.texture : test}
-          color={new THREE.Color().setScalar(m.brightness)}
-          toneMapped={false}
-        />
+        {s.direction === "direction2" ? (
+          <DirectionTwo surface={surface} />
+        ) : (
+          <meshBasicMaterial
+            map={media?.width ? media.texture : test}
+            color={new THREE.Color().setScalar(m.brightness)}
+            toneMapped={false}
+          />
+        )}
         {s.calibration && !s.presentation && (
           <>
             <Edges color="#b7f7d0" />
@@ -546,6 +560,10 @@ function CameraRig() {
       ref={orbit}
       makeDefault
       enableDamping
+      enableRotate={
+        !(s.direction === "direction2" && s.revealMode === "pointer")
+      }
+      enablePan={!(s.direction === "direction2" && s.revealMode === "pointer")}
       minDistance={0.2}
       maxDistance={90}
       maxPolarAngle={Math.PI - 0.01}

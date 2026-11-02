@@ -36,6 +36,12 @@ npm run build
 8. **Architecture** exposes dimensions, wall segments, reference overlays, model import, measurement provenance and calibration helpers. Select a named object for move/rotate/scale gizmos. Transform changes commit when the gizmo is released. Undo retains the last 30 edits; reset restores initial geometry and mapping.
 9. Export scene JSON or mapping JSON to keep edits. Import validates numerical dimensions, transforms and mapping rectangles. Scene JSON includes saved cameras. Camera-only JSON is an export for external use. Media files, reference images, imported models and lighting/UI session preferences are not embedded in JSON and must be reloaded/set in a new browser session.
 
+## Direction 2 — Hidden Worlds
+
+Choose **Direction 2 / Hidden Worlds** in the toolbar to map an animated flashlight-reveal concept onto the room. Blue contour ribbons animate on floor, ceiling and wall. Three warm-edged circular masks reveal steel framing with moving elevators, an animated city, and turning clockwork. These are generated LED pixels, with no flashlight beam or spotlight illuminating the architecture. Door apertures remain excluded from the LED imagery.
+
+**Auto demo** simulates three tracked aiming positions. **Aim with pointer** raycasts the cursor onto the actual LED wall; the reveal disappears over doors/windows and cycles hidden scenes every ten seconds. Orbit rotation/panning is disabled while aiming; use camera presets or return to Auto demo to reposition. Pause reveals freezes the animation while keeping aiming active. Direction 1 restores the normal media/pattern workflow. This is a live procedural previsualization, not exported video or a hardware tracking integration. The reference image is not distributed with the site.
+
 ## Architectural basis
 
 All five supplied PDF sheets were visually reviewed and their text extracted. No drawing pixel distances were used as measurements. The user’s concept images guide materials and viewing direction, not dimensions. Neither image is baked into a surface.
