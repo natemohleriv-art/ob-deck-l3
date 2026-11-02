@@ -166,7 +166,7 @@ export default function BuildingTower() {
         </mesh>
       ))}
       {/* Thin overhanging slabs articulate the crown without covering gallery glazing. */}
-      {[-16, -5, c.height + 0.15, c.height + 13.1].map((y, i) => (
+      {[-16, -5, c.height + 0.4, c.height + 13.1].map((y, i) => (
         <mesh key={i} position={[-5, y, 0]}>
           <boxGeometry args={[c.width + 17, 0.35, c.length + 4]} />
           <meshStandardMaterial
@@ -192,3 +192,4 @@ export default function BuildingTower() {
     </group>
   );
 }
+
