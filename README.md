@@ -97,3 +97,7 @@ GLB and self-contained glTF imports preserve the imported hierarchy under Import
 A desktop GPU/browser with WebGL2 is recommended. The production bundle is approximately 1.36 MB before compression, primarily the 3D renderer and controls. Rendering resolution is capped at 1.5 device-pixel ratio to limit GPU load.
 
 Architecture includes a drawing-baseline audit and **Restore LED drawing dimensions**. It detects edited dimensions and LED object transforms; restoration preserves content mappings and has Undo support. Matching this baseline does not resolve the documented wall/doorway and finished-face uncertainties.
+
+## Exterior building form
+
+The BuildingShell follows the supplied tower references with a broad podium, stepped lower wings, shoulder, slender upper shaft and enlarged observation crown with terraces and a magenta collar. Use **Building / Full Tower** and **Building / Crown** camera presets. Exterior heights, offsets and facade details are visual approximations; the LED floor, ceiling and selected wall dimensions are unchanged.

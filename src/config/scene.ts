@@ -42,6 +42,12 @@ export const presets: CameraView[] = [
   { name: "City / Far End", position: [1, 1.7, -11], target: [3, 0.7, -28] },
   { name: "City / Near End", position: [1, 1.7, 11], target: [3, 0.7, 28] },
   { name: "Elevated Overview", position: [18, 25, 27], target: [0, 0, 0] },
+  {
+    name: "Building / Full Tower",
+    position: [235, 55, 285],
+    target: [-9, -135, 0],
+  },
+  { name: "Building / Crown", position: [65, 38, 75], target: [-5, -12, 0] },
 ];
 // Source dimensions are printed callouts, never scaled from PDF pixels.
 export const defaultConfig: SceneConfig = {
@@ -107,7 +113,7 @@ export const defaultConfig: SceneConfig = {
         "User clarification and supplied building/skyline renderings (2026-11-02)",
       confidence: "low",
       status: "estimated",
-      note: "Opaque core at X-negative with enclosed door recesses; glazing only at X-positive and both Z ends. Supporting tower, city heights, facade details and landmark-inspired silhouettes are illustrative; not survey-registered. City grade is approximately 290 m below the LED floor.",
+      note: "Opaque core at X-negative with enclosed door recesses; glazing only at X-positive and both Z ends. Stepped podium, tower wings, slender upper shaft and observation crown follow user-supplied exterior references approximately. Exterior heights, city heights, facade details and landmark-inspired silhouettes are illustrative; not survey-registered. City grade is approximately 290 m below the LED floor.",
     },
     {
       feature: "LED floor width",

@@ -15,7 +15,8 @@ import { mappingDefault, formatDimension } from "../config/scene";
 import { mapUV, wallUV } from "../utils/mapping";
 import { makePattern } from "../utils/patterns";
 import type { V3 } from "../types";
-import { coreEnvelope, CITY_GROUND } from "../config/context";
+import { coreEnvelope } from "../config/context";
+import BuildingTower from "./BuildingTower";
 import CityEnvironment from "./CityEnvironment";
 import DirectionTwo, { flashlightAim, flashlightActive } from "./DirectionTwo";
 export type Assets = {
@@ -229,12 +230,7 @@ function Architecture() {
         ))}
       </Editable>
       <Editable id="BuildingShell">
-        <Box
-          p={[-5, (CITY_GROUND - 0.42) / 2, 0]}
-          size={[c.width + 14, -CITY_GROUND - 0.42, c.length + 1]}
-          color="#344450"
-          metal={0.45}
-        />
+        <BuildingTower />
       </Editable>
       <Editable id="SurroundingFloors">
         <Box
@@ -565,7 +561,7 @@ function CameraRig() {
       }
       enablePan={!(s.direction === "direction2" && s.revealMode === "pointer")}
       minDistance={0.2}
-      maxDistance={90}
+      maxDistance={900}
       maxPolarAngle={Math.PI - 0.01}
       onStart={() => (transition.current = false)}
     />
