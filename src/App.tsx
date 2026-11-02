@@ -30,6 +30,10 @@ import {
   formatDimension,
 } from "./config/scene";
 import { downloadJSON } from "./utils/mapping";
+import {
+  drawingDimensionChanges,
+  restoreDrawingDimensions,
+} from "./config/drawingDimensions";
 import type { Mapping, V3 } from "./types";
 const time = (v: number) =>
   `${Math.floor(v / 60)
@@ -1044,6 +1048,32 @@ export default function App() {
                 {s.tab === "Architecture" && (
                   <>
                     <h3>Architectural calibration</h3>
+                    <div className="callout">
+                      <strong>Original LED drawing sizes</strong>
+                      <br />
+                      Floor: 22′ × 100′
+                      <br />
+                      Ceiling: 22′ 2″ × 100′ 1″
+                      <br />
+                      Wall: 50′ 10″ extent (selected elevation). Newer RCP
+                      conflicts at 53′ 8″. Door widths, wall placement and
+                      finished ceiling face remain provisional.
+                      <p>
+                        {drawingDimensionChanges(config).length
+                          ? `Modified from drawing baseline: ${drawingDimensionChanges(config).join(", ")}.`
+                          : "Model matches the drawing baseline. Wall/opening uncertainties remain."}
+                      </p>
+                      <button
+                        onClick={() => {
+                          s.edit(restoreDrawingDimensions);
+                          setNotice(
+                            "LED drawing dimensions restored; wall openings remain provisional.",
+                          );
+                        }}
+                      >
+                        Restore LED drawing dimensions
+                      </button>
+                    </div>
                     <Toggle
                       label="Calibration helpers"
                       value={s.calibration}

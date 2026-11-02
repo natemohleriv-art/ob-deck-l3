@@ -52,8 +52,8 @@ All five supplied PDF sheets were visually reviewed and their text extracted. No
 | Ceiling | 22 ft 2 in × 100 ft 1 in (6.7564 × 30.5054 m) | p5: 4_633 J; p2–4 sections |
 | Main ceiling face datum | 22 ft 6 in AFFL (6.858 m), provisional visual interpretation | p2–5 |
 | Lower soffit | 21 ft 6 in AFFL (6.5532 m) | p2–5 |
-| Core-side upper wall zone | 53 ft 8 in (16.3584 m) | p5, newer RCP dated 2025-10-29 |
-| Conflicting older wall extent | 50 ft 10 in (15.494 m) | p4, section B dated 2025-08-22 |
+| Core-side upper wall zone | 50 ft 10 in (15.494 m) | p4 section B, user-selected basis |
+| Conflicting newer wall extent | 53 ft 8 in (16.3576 m) | p5 RCP dated 2025-10-29 |
 | Solid wall lengths between openings | 21 ft 8 in; 14 ft 3 in; 5 ft 3 in | p1 plan |
 | Wall build-up | 16 in (0.4064 m) | p1, p2, p5 |
 | Wall / floor diffuser gap | 2 in (0.0508 m) | p1, p4 |
@@ -67,7 +67,7 @@ The central LED wall is on X-negative, with exterior glazing opposite at X-posit
 
 The LED side has a continuous opaque building core, recessed solid doors and a supporting tower below the deck. Glazing is limited to the opposite long side and the two ends. A procedural New York-style city surrounds those three views, with masonry setbacks, glass towers, spires and illuminated windows that respond to day/dusk/night settings. The three City camera presets inspect each glazed side. Building positions, core depth and the approximate 290 m deck elevation are illustrative context, not surveyed geometry. Supplied RFP imagery is not bundled in the public site.
 
-**Coordination required:** The newer RCP and older wall elevation conflict. The newer upper-wall extent is used, but its absolute Z placement is estimated. Two opening widths (1.70 m and 2.1108 m) reconcile that extent with the printed solid sections; these widths are estimates, not recovered dimensions. Opening height uses the 9 ft 7 in section callout provisionally. The LED ceiling face uses 22 ft 6 in AFFL without subtracting the assembly twice; final assembly/finished-face datums need coordination. Columns, mullions, surrounding floor depth, stairs and facade profiles are procedural approximations. The skyline is illustrative, not a registered New York panorama. All of these limitations are recorded in `src/config/scene.ts` and shown in Architecture → Drawing measurements & confidence.
+**Coordination required:** The newer RCP and older wall elevation conflict. The user selected the older 50 ft 10 in wall elevation on 2026-11-02. Its absolute Z placement is estimated. Two placeholder opening widths (1.3144 m and 1.632 m) divide the remaining 2.9464 m in approximately the prior ratio; these widths are estimates, not recovered dimensions. Opening height uses the 9 ft 7 in section callout provisionally. The LED ceiling face uses 22 ft 6 in AFFL without subtracting the assembly twice; final assembly/finished-face datums need coordination. Columns, mullions, surrounding floor depth, stairs and facade profiles are procedural approximations. The skyline is illustrative, not a registered New York panorama. All of these limitations are recorded in `src/config/scene.ts` and shown in Architecture → Drawing measurements & confidence.
 
 Wall headers and solid sections are separate meshes. There is no LED geometry in the two doorway apertures. Changes to individual section boundaries can deliberately change those gaps.
 
@@ -95,3 +95,5 @@ GLB and self-contained glTF imports preserve the imported hierarchy under Import
 - GLB imports, reference-image alignment, large production-resolution videos, arbitrary codecs and GPU-specific performance require project-specific validation. Independent video timing is best effort, not frame-accurate. Frame rates are intentionally not guessed from unreliable browser metadata.
 
 A desktop GPU/browser with WebGL2 is recommended. The production bundle is approximately 1.36 MB before compression, primarily the 3D renderer and controls. Rendering resolution is capped at 1.5 device-pixel ratio to limit GPU load.
+
+Architecture includes a drawing-baseline audit and **Restore LED drawing dimensions**. It detects edited dimensions and LED object transforms; restoration preserves content mappings and has Undo support. Matching this baseline does not resolve the documented wall/doorway and finished-face uncertainties.
