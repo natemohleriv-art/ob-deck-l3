@@ -38,7 +38,7 @@ npm run build
 
 ## Direction 1 — Color Echoes
 
-The default **Walkers + footprints** preview animates three stylized walking silhouettes on the side-wall LEDs. Their motion warps a fluid multicolor field and leaves soft color wakes. Matching alternating shoe prints are stamped at past positions on three floor lanes and fade over 9.6 seconds. The ceiling carries a quieter color field. **Pause walkers** freezes all three surfaces together. Choose **Uploaded media / atmosphere** to return to the video and calibration workflow. Walkers and recorded trails are simulated in the preview; no camera capture, physical visitor tracking, or persistent visitor-data recording is connected.
+The default **Flowing gradients** preview animates blue, white and black gradients with a restrained pink accent across wall, floor and ceiling. No silhouettes or footprints are shown. **Pause gradients** freezes the animation. Choose **Uploaded media / atmosphere** to return to the video and calibration workflow.
 
 ## Direction 2 — Hidden Worlds
 

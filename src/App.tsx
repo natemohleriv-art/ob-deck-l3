@@ -334,14 +334,14 @@ export default function App() {
                       s.set({ colorEchoes: e.target.value === "echoes" })
                     }
                   >
-                    <option value="echoes">Walkers + footprints</option>
+                    <option value="echoes">Flowing gradients</option>
                     <option value="media">Uploaded media / atmosphere</option>
                   </select>
                   {s.colorEchoes && (
                     <button
                       onClick={() => s.set({ colorPlaying: !s.colorPlaying })}
                     >
-                      {s.colorPlaying ? "Pause walkers" : "Play walkers"}
+                      {s.colorPlaying ? "Pause gradients" : "Play gradients"}
                     </button>
                   )}
                 </>
@@ -503,13 +503,13 @@ export default function App() {
                 {s.direction === "direction2"
                   ? "Point. Discover."
                   : s.colorEchoes
-                    ? "Every step"
+                    ? "Color in motion."
                     : "A canvas beyond"}
                 <br />
                 {s.direction === "direction2"
                   ? "Reveal the unseen."
                   : s.colorEchoes
-                    ? "leaves a color."
+                    ? "Space to breathe."
                     : "the screen."}
               </h2>
               <p>
@@ -521,7 +521,7 @@ export default function App() {
                     ? "Move your pointer over the LED wall. Hidden scenes change every 10 seconds."
                     : "Three tracked reveals. Architecture, city, clockwork."
                   : s.colorEchoes
-                    ? "Simulated walkers displace color. Footprints linger, then fade."
+                    ? "Blue, white and black gradients with a subtle pink accent."
                     : "Three surfaces. One shared experience."}
               </p>
               <button
